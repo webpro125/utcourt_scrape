@@ -1,0 +1,39 @@
+.container.content-xs
+  .row
+    .col-md-offset-1.col-md-10
+      h1.text-center Home
+
+      p.margin-bottom-30
+        | Welcome to Utcourt
+  /- @response.search('div#origcontent div.col-xs-12.col-sm-4').each do |data|
+  /  - data.search('ul li a').each do |a_link|
+  /    = a_link['href']
+  /    br
+  /    br
+  /- @response.search('div#origcontent div.col-xs-12.col-sm-6 div.col-xs-12.col-sm-6').each do |data|
+  /  = data.search('ul li a').count
+  / = File.basename 'https://www.utcourts.gov/cal/data/DUCHESNE_Calendar.pdf'
+  - @reader.pages.each_with_index do |page, index|
+    /- atty_line = page.text.scan(/ATTY:*.+/)
+    - if index <= 50
+      - page.text.split(/-------*/).each_with_index do|dot_block, index1|
+        - lines = dot_block.scan(/^.+/)
+        - if index1 == 0
+          p= 'Title: ' + lines[0]
+          - date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
+          p= 'Time:' + dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
+          - atty1 = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
+          - if atty1 == ''
+            = atty1 = dot_block[/ATTY:(.*)/m, 1]
+          p = 'ATTY: ' + (!atty1.nil? ? atty1.split('ATTY:')[1].gsub(/\s+/m, " ").strip : '')
+          p= date_array[date_array.count - 3].to_s + ' ' + date_array[date_array.count-2].to_s + ' ' + date_array[date_array.count-1].to_s
+      /- lines = page.text.scan(/^.+/)
+      /= lines[0]
+    br
+      /- data.search('ul li a').each do |a_link|
+      /  = a_link['href']
+      /  br
+      /  br
+  /= form_tag import_car_path, multipart: true do
+  /  = file_field_tag :csv_file
+  /  = submit_tag "Import"
