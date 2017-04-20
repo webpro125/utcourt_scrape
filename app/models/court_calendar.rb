@@ -1,0 +1,2 @@
+class CourtCalendar < ApplicationRecord
+end

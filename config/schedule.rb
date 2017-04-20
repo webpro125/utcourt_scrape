@@ -16,5 +16,11 @@
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
-
+# every 1.week, :at => '12pm' do
+#   runner "MyModel.task_to_run_at_four_thirty_in_the_morning"
+# end
+every 10.minute do
+# every 1.week, :at => '4:30 am' do
+  rake "calendar:update_calendar"
+end
 # Learn more: http://github.com/javan/whenever

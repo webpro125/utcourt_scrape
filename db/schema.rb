@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417215047) do
+ActiveRecord::Schema.define(version: 20170420150123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "court_calendars", force: :cascade do |t|
+    t.datetime "start_at"
+    t.time     "start_time"
+    t.date     "start_date"
+    t.string   "atty_name"
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "pdfs", force: :cascade do |t|
     t.string   "download_link"
@@ -41,9 +51,10 @@ ActiveRecord::Schema.define(version: 20170417215047) do
     t.datetime "locked_at"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "first_name",             limit: 64,               null: false
-    t.string   "last_name",              limit: 64,               null: false
+    t.string   "first_name",             limit: 64
+    t.string   "last_name",              limit: 64
     t.string   "username",               limit: 128,              null: false
+    t.string   "name",                   limit: 128,              null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
