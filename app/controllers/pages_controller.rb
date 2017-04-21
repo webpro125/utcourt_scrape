@@ -2,6 +2,11 @@ class PagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+
+    if params[:name].present? && !params[:name].nil?
+      file_path = Rails.root.join('public', 'pdf', params[:name])
+      @reader = PDF::Reader.new(file_path ) if File.exist?(file_path)
+    end
     # @response = Nokogiri::HTML(open('https://www.utcourts.gov/cal/index.html'))
     # @response.search('div#origcontent div.col-xs-12.col-sm-4').each do |data|
     #   data.search('ul li a').each do |a_link|

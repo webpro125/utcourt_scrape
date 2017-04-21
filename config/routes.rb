@@ -7,4 +7,6 @@ Rails.application.routes.draw do
        controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'pages#index'
+  post '/pages', to: 'pages#index'
+  get '/pages', to: 'pages#index'
 end
