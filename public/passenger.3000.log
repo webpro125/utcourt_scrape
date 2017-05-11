@@ -1,0 +1,25 @@
+[ 2017-05-11 04:29:11.1510 16585/b6aea740 age/Wat/WatchdogMain.cpp:1281 ]: Starting Passenger watchdog...
+[ 2017-05-11 04:29:11.1786 16588/b6b04740 age/Cor/CoreMain.cpp:1070 ]: Starting Passenger core...
+[ 2017-05-11 04:29:11.1796 16588/b6b04740 age/Cor/CoreMain.cpp:245 ]: Passenger core running in multi-application mode.
+[ 2017-05-11 04:29:11.2044 16588/b6b04740 age/Cor/CoreMain.cpp:820 ]: Passenger core online, PID 16588
+[ 2017-05-11 04:29:11.2298 16594/b6a87740 age/Ust/UstRouterMain.cpp:529 ]: Starting Passenger UstRouter...
+[ 2017-05-11 04:29:11.2327 16594/b6a87740 age/Ust/UstRouterMain.cpp:342 ]: Passenger UstRouter online, PID 16594
+2017/05/11 04:29:13 [error] 16607#0: *4 "/home/praneth/workspace/utcourt_scrape/public/public/index.html" is not found (2: No such file or directory), client: 127.0.0.1, server: _, request: "HEAD / HTTP/1.1", host: "0.0.0.0"
+[ 2017-05-11 04:29:15.3835 16588/b68b6b40 age/Cor/SecurityUpdateChecker.h:464 ]: Security update check: no update found (next check in 24 hours)
+
+[ 2017-05-11 04:29:53.0991 16588/b5dfeb40 age/Cor/CoreMain.cpp:585 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2017-05-11 04:29:53.0993 16588/b6b04740 age/Cor/CoreMain.cpp:989 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2017-05-11 04:29:53.1000 16588/b557cb40 Ser/Server.h:817 ]: [ServerThr.2] Freed 128 spare client objects
+[ 2017-05-11 04:29:53.1001 16588/b557cb40 Ser/Server.h:464 ]: [ServerThr.2] Shutdown finished
+[ 2017-05-11 04:29:53.1057 16588/b4cfab40 Ser/Server.h:817 ]: [ApiServer] Freed 0 spare client objects
+[ 2017-05-11 04:29:53.1058 16588/b4cfab40 Ser/Server.h:464 ]: [ApiServer] Shutdown finished
+[ 2017-05-11 04:29:53.1060 16588/b5dfeb40 Ser/Server.h:817 ]: [ServerThr.1] Freed 128 spare client objects
+[ 2017-05-11 04:29:53.1061 16588/b5dfeb40 Ser/Server.h:464 ]: [ServerThr.1] Shutdown finished
+
+[ 2017-05-11 04:29:53.1072 16594/b67ffb40 age/Ust/UstRouterMain.cpp:422 ]: Signal received. Gracefully shutting down... (send signal 2 more time(s) to force shutdown)
+[ 2017-05-11 04:29:53.1073 16594/b6a87740 age/Ust/UstRouterMain.cpp:492 ]: Received command to shutdown gracefully. Waiting until all clients have disconnected...
+[ 2017-05-11 04:29:53.1074 16594/b5bffb40 Ser/Server.h:817 ]: [UstRouterApiServer] Freed 0 spare client objects
+[ 2017-05-11 04:29:53.1075 16594/b5bffb40 Ser/Server.h:464 ]: [UstRouterApiServer] Shutdown finished
+[ 2017-05-11 04:29:53.1082 16594/b67ffb40 Ser/Server.h:464 ]: [UstRouter] Shutdown finished
+[ 2017-05-11 04:29:53.1135 16594/b6a87740 age/Ust/UstRouterMain.cpp:523 ]: Passenger UstRouter shutdown finished
+[ 2017-05-11 04:29:53.1568 16588/b6b04740 age/Cor/CoreMain.cpp:1055 ]: Passenger core shutdown finished

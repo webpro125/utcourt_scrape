@@ -40,7 +40,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
     add_index :users, :unlock_token,         unique: true
     add_column :users, :first_name,    :string,   null: false, limit: 64
     add_column :users, :last_name,    :string,   null: false, limit: 64
-    add_column :users, :username,    :string,   null: false, limit: 128
-    add_index :users, :username, unique: true
+    add_column :users, :username,    :string,   limit: 128
   end
 end

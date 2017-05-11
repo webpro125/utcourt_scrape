@@ -58,6 +58,9 @@ gem 'httparty', '~> 0.14.0'
 gem 'nokogiri', '~> 1.7', '>= 1.7.1'
 gem 'whenever', '~> 0.9.7'
 gem 'pdf-reader', '~> 2.0'
+gem 'jwt', '~> 1.5.6'
+gem 'omniauth'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

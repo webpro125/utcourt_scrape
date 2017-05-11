@@ -1,0 +1,19 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    h2
+      | User Management
+    ol.breadcrumb
+      li
+        a[href=""]
+          | Home
+      li
+        a Users
+      li.active
+        strong
+          | Edit
+.wrapper.wrapper-content.animated.fadeInRight
+  .ibox.float-e-margins
+    .ibox-title
+      h5 Add User
+    .ibox-content
+      = render 'form'

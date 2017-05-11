@@ -1,0 +1,27 @@
+nav.navbar-default.navbar-static-side role="navigation" 
+  .sidebar-collapse
+    ul#side-menu.nav.metismenu
+      li.nav-header
+        .dropdown.profile-element
+          span
+            = image_tag 'blank-avatar.png', class: 'img-circle img-responsive'
+          a.dropdown-toggle data-toggle="dropdown" href="#"
+            span.clear
+              span.block.m-t-xs.text-center
+                strong.font-bold= current_admin.email
+          ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            li
+              a href=""  Profile
+            li.divider
+            li
+              = link_to 'Logout', destroy_admin_session_path, method: :delete
+        .logo-element
+          | IN+
+      /li class="#{is_active_controller('admin/dashboards')}"
+      /  = link_to admin_dashboards_path do
+      /    i.fa.fa-th-large
+      /    span.nav-label data-i18n="nav.dashboard"  Dashboard
+      li class="#{is_active_controller('admin/users')}"
+        = link_to admin_users_path do
+          i.fa.fa-user
+          span.nav-label data-i18n="nav.dashboard"  Users

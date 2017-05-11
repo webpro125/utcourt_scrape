@@ -1,0 +1,31 @@
+<div class="loginColumns animated fadeInDown">
+  <div class="row">
+
+    <div class="col-md-6 col-md-offset-3">
+      <div class="ibox-content">
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'm-t') do |f| %>
+            <%= render "layouts/flash" %>
+            <%= f.error_notification %>
+            <%= f.input :email, required: false, autofocus: true %>
+            <%= f.input :password, required: false %>
+            <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+            <%= button_tag 'Log In', type: 'submit', class: 'btn btn-primary block full-width m-b' %>
+            <%= render "devise/shared/links" %>
+        <% end %>
+        <p class="m-t">
+          <small>Adjuster Map &copy; 2016</small>
+        </p>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-6">
+      Copyright Example Company
+    </div>
+    <div class="col-md-6 text-right">
+      <small>© 2014-2016</small>
+    </div>
+  </div>
+</div>
+
