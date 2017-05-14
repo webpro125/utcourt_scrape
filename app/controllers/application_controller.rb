@@ -5,12 +5,10 @@ class ApplicationController < ActionController::Base
   attr_reader :current_user
 
 
-  def send_sms user, message
+  def send_sms user, message, request_history
     if user.approved?
       to_phone = user.phone.to_s
-      if to_phone[0] == "0"
-        to_phone.sub!("0", '')
-      end
+      to_phone.sub!("0", '') if to_phone[0] == "0"
       to_number = '+1' + to_phone
       begin
         twilio_client.messages.create(
@@ -18,6 +16,7 @@ class ApplicationController < ActionController::Base
             from: ENV['TWILIO_PHONE_NUMBER'],
             body: message
         )
+        request_history.update_attributes(is_sent: true)
       rescue Twilio::REST::RequestError => e
         puts e.message
       end
@@ -57,4 +56,3 @@ class ApplicationController < ActionController::Base
     http_token && auth_token && auth_token[:user_id].to_i
   end
 end
-on

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170513145313) do
+ActiveRecord::Schema.define(version: 20170514192928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20170513145313) do
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["atty_name"], name: "index_court_calendars_on_atty_name", using: :btree
   end
 
   create_table "pdfs", force: :cascade do |t|
@@ -61,8 +62,11 @@ ActiveRecord::Schema.define(version: 20170513145313) do
     t.integer  "request_id"
     t.integer  "user_id"
     t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "is_sent",           default: false
+    t.integer  "court_calendar_id"
+    t.index ["court_calendar_id"], name: "index_request_histories_on_court_calendar_id", using: :btree
     t.index ["request_id"], name: "index_request_histories_on_request_id", using: :btree
     t.index ["user_id"], name: "index_request_histories_on_user_id", using: :btree
   end
@@ -109,6 +113,7 @@ ActiveRecord::Schema.define(version: 20170513145313) do
     t.string   "phone"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["name"], name: "index_users_on_name", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   end

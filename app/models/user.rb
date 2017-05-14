@@ -10,5 +10,5 @@ class User < ApplicationRecord
   # validates :last_name, length: { in: 2..32 }, presence: true,
   #           format: { with: RegexConstants::Words::AND_SPECIAL,
   #                     message: 'Special letters are not allowed to input' }
-  # validates :username, length: { in: 2..32 }, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 end
