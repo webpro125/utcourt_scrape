@@ -10,8 +10,12 @@ class Api::RequestsController < ApplicationController
   private
 
   def attorneys
-    CourtCalendar.where('lower(atty_name) = ?', params[:court_name].downcase)
-
+    attorneys = CourtCalendar.where('lower(atty_name) = ?', params[:court_name].downcase)
+    attorneys.each { |atty|
+      unless user = User.find_by(name: atty.name).nil?
+        send_sms user, message
+      end
+    }
   end
   def request_params
     params.permit(:court_name, :date, :time, :hearing, :notes, :court)

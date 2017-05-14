@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170511214830) do
+ActiveRecord::Schema.define(version: 20170513145313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 20170511214830) do
     t.string   "download_link"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "request_histories", force: :cascade do |t|
+    t.integer  "request_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_request_histories_on_request_id", using: :btree
+    t.index ["user_id"], name: "index_request_histories_on_user_id", using: :btree
   end
 
   create_table "requests", force: :cascade do |t|

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     post 'auth_user' => 'authentication#authenticate_user'
     post 'register_user' => 'authentication#register_user'
     get 'user_info' => 'users#user_info' #test
+    post 'users' => 'users#update'
+    # resource :users, only: [:update]
     resources :requests, only: [:create]
 
   end

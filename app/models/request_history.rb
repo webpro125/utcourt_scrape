@@ -1,0 +1,2 @@
+class RequestHistory < ApplicationRecord
+end
