@@ -1,0 +1,48 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    h2
+      | Request History
+    ol.breadcrumb
+      li
+        a[href=""]
+          | Home
+      li.active
+        strong
+          | Requests
+.row
+  .col-md-12.m-t
+    = render 'layouts/flash'
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title.text-right
+          h5
+            | Request History
+        .ibox-content
+          table.table.table-bordered
+            thead
+              tr
+                th Case Name
+                th Court Date
+                th Court Time
+                th Sent Users Count
+                th requested Date
+                th #
+            tbody
+              - @requests.each do |request|
+                tr
+                  td= request.court_name
+                  td= request.date
+                  td= request.time
+                  td= request.request_histories.count
+                  td= request.created_at.to_s(:long)
+                  td
+                    = link_to admin_request_path(request), class: 'btn btn-xs btn-info m-r-xs' do
+                      i.fa.fa-info
+                      |  Detail
+                /  td= user.phone
+                /  td= human_boolean user.approved
+                /  td= user.created_at.to_date
+
+

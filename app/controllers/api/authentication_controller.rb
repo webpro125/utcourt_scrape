@@ -9,6 +9,7 @@ class Api::AuthenticationController < ApplicationController
   end
 
   def register_user
+
     user = User.new(user_params)
     if user.save
       render json: payload(user)

@@ -15,8 +15,7 @@ Rails.application.routes.draw do
     get 'user_info' => 'users#user_info' #test
     post 'users' => 'users#update'
     # resource :users, only: [:update]
-    resources :requests, only: [:create]
-
+    resources :requests, only: [:create, :index]
   end
   authenticated :admin do
     root 'admin/users#index', as: :site_admin
@@ -31,7 +30,7 @@ Rails.application.routes.draw do
       get :approve
     end
     resource :profiles, path: 'profile', only:[:edit, :update]
-    # resources :dashboards, only: [:index]
+    resources :requests, only: [:index, :show]
   end
 
 
