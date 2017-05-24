@@ -21,7 +21,7 @@
 # end
 every 10.minute do
 # every 1.week, :at => '4:30 am' do
-  rake "calendar:update_calendar"
+#   rake "calendar:update_calendar"
 #   rake 'pdf:download'
 end
 # Learn more: http://github.com/javan/whenever
