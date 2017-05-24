@@ -123,6 +123,18 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     jwt (1.5.6)
+    kaminari (1.0.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.0.1)
+      kaminari-activerecord (= 1.0.1)
+      kaminari-core (= 1.0.1)
+    kaminari-actionview (1.0.1)
+      actionview
+      kaminari-core (= 1.0.1)
+    kaminari-activerecord (1.0.1)
+      activerecord
+      kaminari-core (= 1.0.1)
+    kaminari-core (1.0.1)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -294,6 +306,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 6.0, >= 6.0.1)
   jwt (~> 1.5.6)
+  kaminari (~> 1.0.1)
   listen (~> 3.0.5)
   nokogiri (~> 1.7, >= 1.7.1)
   omniauth
@@ -322,4 +335,4 @@ DEPENDENCIES
   whenever (~> 0.9.7)
 
 BUNDLED WITH
-   1.14.6
+   1.15.0

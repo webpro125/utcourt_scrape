@@ -40,7 +40,7 @@ namespace :calendar do
               start_time: court_time,
               start_date: Date.parse(court_date),
               title: title,
-              atty_name: attorney
+              atty_name: attorney.downcase
           )
         end
       end

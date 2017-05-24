@@ -38,7 +38,7 @@
                   td= rh.receive_user.name
                   td= rh.court_title
                   td= rh.court_date
-                  td= DateTime.new(rh.court_time).strftime("%I:%M%p")
+                  td= rh.court_time.strftime('%H:%M:%S')
                   td= rh.created_at.to_s(:long)
                   /td
                   /  = link_to admin_request_path(request), class: 'btn btn-xs btn-info m-r-xs' do

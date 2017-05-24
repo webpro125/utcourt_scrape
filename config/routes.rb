@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     post 'users' => 'users#update'
     # resource :users, only: [:update]
     resources :requests, only: [:create, :index]
+    resources :request_histories, only: [:index]
   end
   authenticated :admin do
     root 'admin/users#index', as: :site_admin

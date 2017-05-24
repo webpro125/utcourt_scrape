@@ -13,4 +13,5 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   before_save { self.name = name.downcase }
+  has_many :requests
 end
