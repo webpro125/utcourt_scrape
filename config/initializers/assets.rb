@@ -14,10 +14,12 @@ Rails.application.config.assets.precompile +=  [
     'admin/users.css',
     'admin/profiles.css',
     'admin/requests.css',
+    'admin/dashboards.css',
 ]
 Rails.application.config.assets.precompile +=  [
     'pages.js',
     'admin/users.js',
     'admin/profiles.js',
     'admin/requests.js',
+    'admin/dashboards.js',
 ]

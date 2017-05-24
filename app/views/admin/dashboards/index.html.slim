@@ -1,0 +1,57 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    h2
+      | Dashboard
+    ol.breadcrumb
+      li
+        a[href=""]
+          | Dashboard
+.row
+  .col-md-12.m-t
+    = render 'layouts/flash'
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title.text-right
+          h5
+            | Search
+        .ibox-content
+          = search_form_for @q, url: admin_dashboards_path do |f|
+            .form-group
+              .col-md-3
+                = f.label 'ATTY Name'
+                = f.search_field :atty_name_eq, class: 'form-control'
+              .col-md-3
+                = f.label 'Date'
+                .input-group.date
+                  span.input-group-addon
+                    i.fa.fa-calendar
+                  = f.search_field :start_date_eq, class: 'form-control'
+              .col-md-3
+                = f.label 'Time'
+                .input-group.clockpicker[data-autoclose="true"]
+                  = f.search_field :start_time_eq, class: 'form-control', value: (params[:q].present? ? params[:q][:start_time_eq] : '')
+                  span.input-group-addon
+                    span.fa.fa-clock-o
+
+            .row
+              .col-md-12
+                = button_tag type: 'submit', class: 'btn btn-primary pull-right' do
+                  = (content_tag(:i, '', {class: 'fa fa-search'}) + ' Search').html_safe
+      ibox.float-e-margins
+        .ibox-title.text-right
+          h5
+            | Search Result
+        .ibox-content
+          table.table.table-bordered
+            thead
+              tr
+                th Name
+                th Court Date
+                th Court Time
+                th Court Title
+            tbody
+              = render @court_calendars unless @court_calendars.nil?
+          .text-right
+            = paginate @court_calendars, views_prefix: 'admin' unless @court_calendars.nil?

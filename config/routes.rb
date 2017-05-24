@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     end
     resource :profiles, path: 'profile', only:[:edit, :update]
     resources :requests, only: [:index, :show]
+    resources :dashboards, only: [:index]
   end
 
 
