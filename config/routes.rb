@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     get '/' => 'users#index'
     resources :users do
       get :approve
+      get :disapprove
     end
     resource :profiles, path: 'profile', only:[:edit, :update]
     resources :requests, only: [:index, :show]

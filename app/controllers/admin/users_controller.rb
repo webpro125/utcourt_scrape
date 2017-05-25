@@ -12,9 +12,9 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.skip_confirmation!
+    # @user.skip_confirmation!
     if @user.save
-      UserMailer.user_created(@user).deliver
+      # UserMailer.user_created(@user).deliver
       redirect_to admin_users_path, notice: 'User has been created successfully!'
     else render :new
     end
@@ -39,6 +39,15 @@ class Admin::UsersController < ApplicationController
     else render :index
     end
   end
+
+  def disapprove
+    @user = User.find(params[:user_id])
+    if @user.update_attributes(approved: false)
+      redirect_to admin_users_path, notice: 'User has been disapproved successfully.'
+    else render :index
+    end
+  end
+
   def destroy
     if @user.destroy
       redirect_to admin_users_path, notice: 'User has been deleted successfully.'

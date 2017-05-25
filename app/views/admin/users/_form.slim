@@ -1,16 +1,7 @@
 = simple_form_for [:admin, @user], html: {class: ''} do |f|
-  .row
-    .col-md-6
-      = f.input :first_name
-    .col-md-6
-      = f.input :last_name
-  = f.input :email, required: true
-  .row
-    .col-md-6
-      = f.input :company_name
-    .col-md-6
-      = f.input :phone
-
+  = f.input :name, required: true
+  = f.input :phone, required: true
+  = f.input :email
   .row
     .col-md-6
       = f.input :password, required: true

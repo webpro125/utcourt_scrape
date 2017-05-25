@@ -14,4 +14,10 @@ module ApplicationHelper
   def human_boolean(boolean)
     boolean ? 'Yes' : 'No'
   end
+
+  def wrap_human type
+    html = '<span class="badge badge-success">Yes</span>'.html_safe
+    html = '<span class="badge badge-danger">No</span>'.html_safe if type == 'No'
+    html
+  end
 end
