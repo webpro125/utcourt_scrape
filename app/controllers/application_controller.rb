@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if user.approved?
       to_phone = user.phone.to_s
       to_phone.sub!("0", '') if to_phone[0] == "0"
-      to_number = '+855' + to_phone
+      to_number = ENV['COUNTRY_CODE'] + to_phone
       begin
         twilio_client.messages.create(
             to: to_number,
