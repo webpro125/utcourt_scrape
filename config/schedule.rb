@@ -21,8 +21,9 @@
 # end
 every 40.minute do
 # every 1.week, :at => '4:30 am' do
-  rake 'pdf:download'
-  rake "calendar:update_calendar"
-
+#   rake 'pdf:download'
+#   rake "calendar:update_calendar"
+  Rake::Task["pdf:download"].invoke
+  Rake::Task["calendar:update_calendar"].invoke
 end
 # Learn more: http://github.com/javan/whenever

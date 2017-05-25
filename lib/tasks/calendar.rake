@@ -4,7 +4,11 @@ namespace :calendar do
     CourtCalendar.delete_all
     Pdf.find_each do |pdf_data|
       file_path = Rails.root.join('public', 'pdf', File.basename(pdf_data.download_link))
+
+      puts 'path: ' + file_path.to_s
       next unless File.exist?(file_path)
+
+      puts 'path: ' + File.exist?(file_path).to_s
 
       @reader = PDF::Reader.new(file_path )
 
