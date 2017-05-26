@@ -3,6 +3,7 @@ namespace :pdf do
   task download: :environment do
     dir_path = Rails.root.join('public', 'pdf')
     Dir.foreach(dir_path) {|f| fn = File.join(dir_path, f); File.delete(fn) if f != '.' && f != '..'}
+    puts 'removed existing files'
 
     @response = Nokogiri::HTML(open('https://www.utcourts.gov/cal/index.html'))
     @response.search('div#origcontent div.col-xs-12.col-sm-4').each do |data|
@@ -22,6 +23,8 @@ namespace :pdf do
       download = open(pdf.download_link)
       IO.copy_stream(download, Rails.root.join('public', 'pdf', File.basename(pdf.download_link) ))
     end
+
+    puts 'downloading pdf is finished'
   end
 
 end
