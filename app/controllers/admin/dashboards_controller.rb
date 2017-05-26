@@ -5,7 +5,7 @@ class Admin::DashboardsController < ApplicationController
     params[:q][:atty_name_eq] = params[:q][:atty_name_eq].downcase if params[:q].present?
 
     @q = CourtCalendar.ransack(params[:q])
-    @court_calendars = @q.result.page(params[:page]).per(10) if params[:q].present?
+    @court_calendars = @q.result.page(params[:page]).per(15)
 
   end
 end
