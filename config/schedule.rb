@@ -19,8 +19,8 @@
 # every 1.week, :at => '12pm' do
 #   runner "MyModel.task_to_run_at_four_thirty_in_the_morning"
 # end
-every 30.minute do
-# every 1.week, :at => '4:30 am' do
+# every 30.minute do
+every 1.week, :at => '4:30 am' do
   rake 'calendar:download'
   # rake "calendar:update_calendar"
 end
