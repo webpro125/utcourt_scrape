@@ -65,12 +65,13 @@ namespace :calendar do
             atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
           end
 
-          court_date_time = DateTime.parse(court_date + ' ' + court_time)
+          # court_date_time = DateTime.parse(court_date + ' ' + court_time)
 
-          atty_array = atty.split(',')
-
-          atty_array.each do |attorney|
-            attorney = attorney.gsub(/\s+/m, " ").strip
+          # atty_array = atty.split(',')
+          #
+          # atty_array.each do |attorney|
+          attorney = atty.gsub(/\s+/m, " ").strip
+          if !attorney.nil? && attorney != ''
             CourtCalendar.create!(
                 start_time: court_time,
                 start_date: Date.parse(court_date),
