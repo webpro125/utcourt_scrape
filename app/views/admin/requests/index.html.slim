@@ -23,7 +23,7 @@
           table.table.table-bordered
             thead
               tr
-                th Case Name
+                th client Name
                 th Court Date
                 th Court Time
                 th Sent Users Count
@@ -32,9 +32,9 @@
             tbody
               - @requests.each do |request|
                 tr
-                  td= request.court_name
+                  td= request.client_name
                   td= request.date
-                  td= request.time
+                  td= request.time.strftime('%H:%M:%S')
                   td= request.request_histories.count
                   td= request.created_at.to_s(:long)
                   td

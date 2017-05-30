@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518220035) do
+ActiveRecord::Schema.define(version: 20170530033013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,11 +45,19 @@ ActiveRecord::Schema.define(version: 20170518220035) do
     t.datetime "start_at"
     t.time     "start_time"
     t.date     "start_date"
-    t.string   "atty_name"
     t.string   "title"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "court_location_id"
+    t.string   "atty_first_name"
+    t.string   "atty_last_name"
+    t.index ["court_location_id"], name: "index_court_calendars_on_court_location_id", using: :btree
+  end
+
+  create_table "court_locations", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["atty_name"], name: "index_court_calendars_on_atty_name", using: :btree
   end
 
   create_table "pdfs", force: :cascade do |t|
@@ -75,16 +83,16 @@ ActiveRecord::Schema.define(version: 20170518220035) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.string   "court_name"
+    t.string   "client_name"
     t.date     "date"
     t.time     "time"
-    t.string   "court"
+    t.string   "court_location"
     t.string   "hearing"
     t.text     "notes"
     t.integer  "range"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.index ["user_id"], name: "index_requests_on_user_id", using: :btree
   end
 

@@ -21,7 +21,7 @@
             .form-group
               .col-md-3
                 = f.label 'ATTY Name'
-                = f.search_field :atty_name_eq, class: 'form-control'
+                = f.search_field :atty_last_name_eq, class: 'form-control'
               .col-md-3
                 = f.label 'Date'
                 .input-group.date
@@ -47,10 +47,11 @@
           table.table.table-bordered
             thead
               tr
-                th Name
+                th Last Name
+                th First Name
                 th Court Date
                 th Court Time
-                th Court Title
+                th Court Location
             tbody
               = render @court_calendars unless @court_calendars.nil?
           .text-right

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post 'register_user' => 'authentication#register_user'
     get 'user_info' => 'users#user_info' #test
     post 'users' => 'users#update'
+    get 'court_locations' => 'users#court_locations'
     # resource :users, only: [:update]
     resources :requests, only: [:create, :index]
     resources :request_histories, only: [:index]

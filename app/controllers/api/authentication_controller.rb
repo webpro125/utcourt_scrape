@@ -24,11 +24,11 @@ class Api::AuthenticationController < ApplicationController
     return nil unless user and user.id
     {
         auth_token: JsonWebToken.encode({user_id: user.id}),
-        user: {id: user.id, email: user.email, name: user.name, phone: user.phone}
+        user: {id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, phone: user.phone}
     }
   end
 
   def user_params
-    params.permit(:email, :password, :password_confirmation, :name, :phone)
+    params.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone)
   end
 end

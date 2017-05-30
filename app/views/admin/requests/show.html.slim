@@ -11,7 +11,7 @@
           | Requests
       li
         strong
-          = @request.court_name
+          = @request.court_location
 .row
   .col-md-12.m-t
     = render 'layouts/flash'
@@ -20,7 +20,7 @@
     .col-lg-12
       .ibox.float-e-margins
         .ibox-title.text-right
-          h5= @request.court_name
+          h5= @request.court_location
 
         .ibox-content
           table.table.table-bordered
@@ -31,7 +31,7 @@
                 th Court Date
                 th Court Time
                 th requested Date
-                th #
+                /th #
             tbody
               - @request_histories.each do |rh|
                 tr

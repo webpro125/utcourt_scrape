@@ -7,6 +7,6 @@ class Admin::RequestsController < ApplicationController
 
   def show
     @request = Request.find(params[:id])
-    @request_histories = @request.request_histories
+    @request_histories = @request.request_histories.order(created_at: :desc)
   end
 end

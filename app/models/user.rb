@@ -10,8 +10,11 @@ class User < ApplicationRecord
   # validates :last_name, length: { in: 2..32 }, presence: true,
   #           format: { with: RegexConstants::Words::AND_SPECIAL,
   #                     message: 'Special letters are not allowed to input' }
-  validates :name, presence: true, uniqueness: true
+  validates :first_name, :last_name, presence: true, uniqueness: true
 
-  before_save { self.name = name.downcase }
+  before_save {
+    self.first_name = first_name.downcase
+    self.last_name = last_name.downcase
+  }
   has_many :requests
 end

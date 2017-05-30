@@ -18,9 +18,13 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def court_locations
+    render json: CourtLocation.all
+  end
+
   private
 
   def user_params
-    params.permit(:email, :password, :password_confirmation, :name, :phone)
+    params.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone)
   end
 end

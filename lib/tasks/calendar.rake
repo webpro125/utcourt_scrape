@@ -70,14 +70,28 @@ namespace :calendar do
           # atty_array = atty.split(',')
           #
           # atty_array.each do |attorney|
+
           attorney = atty.gsub(/\s+/m, " ").strip
+
           if !attorney.nil? && attorney != ''
-            CourtCalendar.create!(
+            atty_array = attorney.split(',')
+            attorney_first_name = atty_array[0].gsub(/\s+/m, " ").strip
+
+            if atty_array[1].nil?
+              attorney_last_name = ''
+            else
+              attorney_last_name = atty_array[1].gsub(/\s+/m, " ").strip
+            end
+            court_location = CourtLocation.find_or_create_by!(name: title)
+
+            court_calendar = court_location.court_calendars.build(
                 start_time: court_time,
                 start_date: Date.parse(court_date),
-                title: title,
-                atty_name: attorney.downcase
+                atty_first_name: attorney_first_name.downcase,
+                atty_last_name: attorney_last_name.downcase
             )
+
+            court_calendar.save!
           end
         end
       end
