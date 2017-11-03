@@ -31,6 +31,11 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def after_sign_in_path_for(resource)
+    stored_location_for(resource) || signed_in_root_path(resource)
+  end
+
   def authenticate_request!
     unless user_id_in_token?
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized

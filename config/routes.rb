@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :requests, only: [:create, :index]
     resources :request_histories, only: [:index]
   end
+
   authenticated :admin do
     root 'admin/users#index', as: :site_admin
   end
@@ -32,7 +33,9 @@ Rails.application.routes.draw do
       get :approve
       get :disapprove
     end
-    resource :profiles, path: 'profile', only:[:edit, :update]
+    resource :profiles, path: 'profile', only:[:edit, :update] do
+      get :scheduled_courts
+    end
     resources :requests, only: [:index, :show]
     resources :dashboards, only: [:index]
   end

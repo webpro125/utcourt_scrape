@@ -21,6 +21,12 @@ class Admin::ProfilesController < ApplicationController
     end
   end
 
+  def scheduled_courts
+    @q = CourtCalendar.where(atty_last_name: 'stone', atty_first_name: 'edward j').ransack(params[:q])
+    @q.sorts = ['start_date asc', 'start_time asc'] if @q.sorts.empty?
+    @court_calendars = @q.result.page(params[:page]).per(15)
+  end
+
   private
 
   def profile_params
