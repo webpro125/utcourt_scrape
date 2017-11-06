@@ -63,7 +63,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   ActionMailer::Base.smtp_settings = {
-      :user_name => 'future0032@gmail.com',
+      :user_name => 'future0032',
       :password => 'flygare10',
       :domain => '107.170.11.192',
       :address => 'smtp.sendgrid.net',
