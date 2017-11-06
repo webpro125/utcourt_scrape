@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :admin do
-    root 'admin/users#index', as: :site_admin
+    root 'admin/profiles#scheduled_courts', as: :site_admin
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

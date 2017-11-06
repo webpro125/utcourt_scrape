@@ -103,4 +103,7 @@ namespace :calendar do
     Rake::Task["calendar:update_calendar"].invoke
   end
 
+  task download: :environment do
+
+  end
 end

@@ -24,4 +24,15 @@ every 1.days, :at => '4:30 am' do
   rake 'calendar:download'
   # rake "calendar:update_calendar"
 end
+
+if ActiveSupport::TimeZone["MST"].present?
+  Time.zone = "MST"
+else Time.zone = "MDT" end
+every 1.day, :at => Time.zone.parse('8:00 am').utc do
+  command 'echo hello'
+end
+
+every 1.day, :at => Time.zone.parse('12:00').utc do
+  command 'echo hello'
+end
 # Learn more: http://github.com/javan/whenever
