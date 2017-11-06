@@ -103,7 +103,7 @@ namespace :calendar do
     Rake::Task["calendar:update_calendar"].invoke
   end
 
-  task download: :environment do
-
+  task notify_today_court: :environment do
+    UserMailer.notify_today_court.deliver_later
   end
 end

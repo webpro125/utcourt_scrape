@@ -1,14 +1,12 @@
-p Hello Edward Stone
+p Hello Edward Stone,
 h4 Below Courts are scheduled today.
 table.table.table-bordered
   thead
     tr
-      th Title
       th Court Time
       th Court Location
   tbody
     - @court_calendars.each do |cc|
       tr
-        td= cc.title
-        td= cc.start_time
+        td= cc.start_time.strftime('%H:%M:%S')
         td= cc.court_location.name

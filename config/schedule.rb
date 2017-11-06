@@ -28,11 +28,12 @@ end
 if ActiveSupport::TimeZone["MST"].present?
   Time.zone = "MST"
 else Time.zone = "MDT" end
+
 every 1.day, :at => Time.zone.parse('8:00 am').utc do
-  command 'echo hello'
+  rake 'calendar:notify_today_court'
 end
 
 every 1.day, :at => Time.zone.parse('12:00').utc do
-  command 'echo hello'
+  rake 'calendar:notify_today_court'
 end
 # Learn more: http://github.com/javan/whenever

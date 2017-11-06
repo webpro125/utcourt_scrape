@@ -22,8 +22,6 @@ class Admin::ProfilesController < ApplicationController
   end
 
   def scheduled_courts
-    UserMailer.notify_today_court.deliver_now
-
     @q = CourtCalendar.where(atty_last_name: 'stone', atty_first_name: 'edward j').ransack(params[:q])
     @q.sorts = ['start_date asc', 'start_time asc'] if @q.sorts.empty?
     @court_calendars = @q.result.page(params[:page]).per(15)
