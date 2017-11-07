@@ -104,7 +104,8 @@ namespace :calendar do
   end
 
   task notify_today_court: :environment do
-    puts 'test'
-    UserMailer.notify_today_court.deliver_later
+    ['edward@stonelawfirm.net', 'sokomheng89@gmail.com'].each do |email|
+      UserMailer.notify_today_court(email).deliver_later
+    end
   end
 end
