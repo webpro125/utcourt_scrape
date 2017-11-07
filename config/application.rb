@@ -13,6 +13,7 @@ module UtcourtScrape
     # -- all .rb files in that directory are automatically loaded.
     config.time_zone = 'UTC'
     config.active_record.default_timezone = :utc # Or :utc
+    config.active_job.queue_adapter = :delayed_job
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do

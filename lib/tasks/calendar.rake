@@ -105,6 +105,6 @@ namespace :calendar do
 
   task notify_today_court: :environment do
     puts 'test'
-    UserMailer.notify_today_court.deliver_now
+    UserMailer.notify_today_court.deliver_later
   end
 end
