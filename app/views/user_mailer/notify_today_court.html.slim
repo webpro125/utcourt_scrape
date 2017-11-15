@@ -5,8 +5,10 @@ table.table.table-bordered
     tr
       th Court Time
       th Court Location
+      th Defendant Name
   tbody
     - @court_calendars.each do |cc|
       tr
         td= cc.start_time.strftime('%H:%M:%S')
         td= cc.court_location.name
+        td= cc.defendant_name

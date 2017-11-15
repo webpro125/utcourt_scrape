@@ -3,9 +3,10 @@ namespace :calendar do
 
   task download: :environment do
     dir_path = Rails.root.join('public', 'pdf')
-    Dir.foreach(dir_path) {|f| fn = File.join(dir_path, f); File.delete(fn) if f != '.' && f != '..'}
     puts 'remove existing files'
-
+    Dir.foreach(dir_path) {|f| fn = File.join(dir_path, f); File.delete(fn) if f != '.' && f != '..'}
+    puts 'remove is done'
+    puts 'start downloading'
     @response = Nokogiri::HTML(open('https://www.utcourts.gov/cal/index.html'))
     @response.search('div#origcontent div.col-xs-12.col-sm-4').each do |data|
       data.search('ul li a').each do |a_link|
@@ -84,11 +85,13 @@ namespace :calendar do
             end
             court_location = CourtLocation.find_or_create_by!(name: title)
 
+            defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
             court_calendar = court_location.court_calendars.build(
                 start_time: court_time,
                 start_date: Date.parse(court_date),
                 atty_last_name: attorney_last_name.downcase,
-                atty_first_name: attorney_first_name.downcase
+                atty_first_name: attorney_first_name.downcase,
+                defendant_name: defendant_name
             )
 
             court_calendar.save!

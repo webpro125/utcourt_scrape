@@ -27,7 +27,7 @@ class PagesController < ApplicationController
     # end
 
 
-    # @reader = PDF::Reader.new(Rails.root.join('public', 'pdf', 'BEAVER_Calendar.pdf' ))
+    @reader = PDF::Reader.new(Rails.root.join('public', 'pdf', 'BEAVER_Calendar.pdf' ))
     #
     # title = ''
     # court_date = ''

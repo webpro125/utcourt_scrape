@@ -5,79 +5,81 @@
 
       p.margin-bottom-30
         | Welcome to Utcourt
-  .row
-    .col-md-6
-      = Rails.root.join('public', 'pdf', 'asdf' )
-      = form_tag('/pages', :class => 'margin-bottom-40')
-        label PDF Name
-        = text_field_tag 'name', params['name'], class: 'form-control margin-bottom-20'
-        = submit_tag 'Submit', class: 'btn-u btn-u-primary'
-      - unless @reader.nil?
-        table.table
-          thead
-            tr
-              th Title
-              th Court Date
-              th Court Time
-              th Atty
-          tbody
-            - @reader.pages.each_with_index do |page, index|
-              - title = ''
-              - court_date = ''
-              - court_time = ''
-              - page.text.split(/-------*/).each_with_index do|dot_block, index1|
-                - lines = dot_block.scan(/^.+/)
-                - if index1 == 0
-                  - title = lines[0].gsub(/\s+/m, " ").strip
-                  - court_date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
-                  - court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
-                - court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
-                - court_time = court_time1 unless court_time1 == ''
-                - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
-                - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
-                - atty = ''
-                - if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
-                  - atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
-                  - atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
-                - else
-                  - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
-
-                tr
-                  td= title
-                  td= court_date
-                  td= court_time
-                  td= atty
-    .col-md-6
-      table.table
-        thead
-          tr
-            th PDF Names
-        tbody
-          - Pdf.all.each do |pdf|
-            tr
-              td= File.basename pdf.download_link
-  /  /- atty_line = page.text.scan(/ATTY:*.+/)
-  /  - if index <= 100
+  /.row
+  /  .col-md-6
+  /    = Rails.root.join('public', 'pdf', 'asdf' )
+  /    = form_tag('/pages', :class => 'margin-bottom-40')
+  /      label PDF Name
+  /      = text_field_tag 'name', params['name'], class: 'form-control margin-bottom-20'
+  /      = submit_tag 'Submit', class: 'btn-u btn-u-primary'
+  /    - unless @reader.nil?
+  /      table.table
+  /        thead
+  /          tr
+  /            th Title
+  /            th Court Date
+  /            th Court Time
+  /            th Atty
+  /        tbody
+  /          - @reader.pages.each_with_index do |page, index|
+  /            - title = ''
+  /            - court_date = ''
+  /            - court_time = ''
+  /            - page.text.split(/-------*/).each_with_index do|dot_block, index1|
+  /              - lines = dot_block.scan(/^.+/)
+  /              - if index1 == 0
+  /                - title = lines[0].gsub(/\s+/m, " ").strip
+  /                - court_date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
+  /                - court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
+  /              - court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
+  /              - court_time = court_time1 unless court_time1 == ''
+  /              - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
+  /              - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
+  /              - atty = ''
+  /              - if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
+  /                - atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
+  /                - atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
+  /              - else
+  /                - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
   /
-  /    - page.text.split(/-------*/).each_with_index do|dot_block, index1|
-  /      h1 Start
-  /      - lines = dot_block.scan(/^.+/)
-  /      - if index1 == 0
-  /        p= 'Title: ' + lines[0]
-  /        - date_array = lines[1].gsub(  /\s+/m, '  ').strip.split("  ")
-  /        p= court_date = date_array[date_array.count - 3].to_s + ' ' + date_array[date_array.count-2].to_s + ' ' + date_array[date_array.count-1].to_s
-  /        p= Date.parse court_date
-  /      p= 'Time:' + court_time = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
-  /      p= dot_block
-  /      p= atty1 = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
-  /      - if atty1 == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
-  /        p= dot_block.scan(/ATTY:*.+/)[1] == 'ATTY:' ? 'TRUE' : 'false'
-  /        = atty1 = dot_block[/ATTY:(.*)/m, 1]
-  /      - if !atty1.nil? && atty1.split('ATTY:')[1].nil?
-  /        h1 'NONONONO'
-  /        - atty1 = dot_block.scan(/ATTY:*.+/)[1]
-  /        = atty = atty1.nil? ? '' : atty1.gsub(/ATTY:/, '')
-  /      - else
-  /        p = atty = (!atty1.nil? ? atty1.split('ATTY:')[1].gsub(/\s+/m, " ").strip : '')
-  /      = atty.nil? ? '' : atty.split(',')
-  /      h1 End
+  /              tr
+  /                td= title
+  /                td= court_date
+  /                td= court_time
+  /                td= atty
+  /  .col-md-6
+  /    table.table
+  /      thead
+  /        tr
+  /          th PDF Names
+  /      tbody
+  /        - Pdf.all.each do |pdf|
+  /          tr
+  /            td= File.basename pdf.download_link
+  - @reader.pages.each_with_index do |page, index|
+    - page.text.split(/-------*/).each_with_index do|dot_block, index1|
+      - lines = dot_block.scan(/^.+/)
+      - if index1 == 0
+        - title = lines[0].gsub(/\s+/m, " ").strip
+        - court_date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
+        - court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
+      - court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
+      - court_time = court_time1 unless court_time1 == ''
+      - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
+      - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
+      = defendant_tmp = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
+      br
+      = dot_block[/ATTY:(.*?)VS./m, 1].to_s
+      br
+      = dot_block[/ATTY:(.*?)ATTY:/m, 1].to_s
+      br
+      = dot_block[/ATTY:(.*?)/i, 1].to_s
+      - atty = ''
+      - if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
+        - atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
+        - atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
+      - else
+        - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
+      br
+      - attorney = 'Attorney: ' + atty.gsub(/\s+/m, " ").strip
+      hr
