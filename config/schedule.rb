@@ -21,14 +21,21 @@ require File.expand_path('../config/environment', __dir__)
 #   runner "MyModel.task_to_run_at_four_thirty_in_the_morning"
 # end
 # every 30.minute do
-every 1.days, :at => '4:30 am' do
-  rake 'calendar:download'
-  # rake "calendar:update_calendar"
-end
+
 
 if ActiveSupport::TimeZone["MST"].present?
   Time.zone = "MST"
 else Time.zone = "MDT" end
+
+every 1.days, :at => Time.zone.parse('7:00 am').utc do
+  rake 'calendar:download'
+  # rake "calendar:update_calendar"
+end
+
+every 1.days, :at => Time.zone.parse('23:00').utc do
+  rake 'calendar:download'
+  # rake "calendar:update_calendar"
+end
 
 every 1.day, :at => Time.zone.parse('8:00 am').utc do
   rake 'calendar:notify_today_court'
