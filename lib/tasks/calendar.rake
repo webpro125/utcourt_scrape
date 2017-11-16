@@ -48,6 +48,15 @@ namespace :calendar do
       @reader.pages.each_with_index do |page, index|
         page.text.split(/-------*/).each_with_index do|dot_block, index1|
           lines = dot_block.scan(/^.+/)
+          wrong_sort = 0
+          defendant_name = nil
+          # check if pdt data is wrong sorted for getting defendant name
+          lines.each_with_index do |line, index|
+            line = line.to_s.strip
+            wrong_sort = index.to_i if line.to_s.=~ /VS.+ATTY:/
+            defendant_name = line[/(.*?)ATTY:/m, 1] if wrong_sort != 0 && wrong_sort + 1 == index
+          end
+
           if index1 == 0
             title = lines[0].gsub(/\s+/m, " ").strip
             court_date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
@@ -85,7 +94,7 @@ namespace :calendar do
             end
             court_location = CourtLocation.find_or_create_by!(name: title)
 
-            defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
+            defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s if defendant_name.nil?
             court_calendar = court_location.court_calendars.build(
                 start_time: court_time,
                 start_date: Date.parse(court_date),

@@ -7,6 +7,7 @@ class PagesController < ApplicationController
       file_path = Rails.root.join('public', 'pdf', params[:name])
       @reader = PDF::Reader.new(file_path ) if File.exist?(file_path)
     end
+    @wrong_sort = 0
     # @response = Nokogiri::HTML(open('https://www.utcourts.gov/cal/index.html'))
     # @response.search('div#origcontent div.col-xs-12.col-sm-4').each do |data|
     #   data.search('ul li a').each do |a_link|
@@ -27,7 +28,7 @@ class PagesController < ApplicationController
     # end
 
 
-    @reader = PDF::Reader.new(Rails.root.join('public', 'pdf', 'BEAVER_Calendar.pdf' ))
+    @reader = PDF::Reader.new(Rails.root.join('public', 'pdf', 'BRIGHAM_CITY_Calendar.pdf' ))
     #
     # title = ''
     # court_date = ''

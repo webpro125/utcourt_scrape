@@ -58,7 +58,18 @@
   /            td= File.basename pdf.download_link
   - @reader.pages.each_with_index do |page, index|
     - page.text.split(/-------*/).each_with_index do|dot_block, index1|
+      = dot_block
       - lines = dot_block.scan(/^.+/)
+      - lines.each_with_index do |line, index|
+        - line = line.to_s.strip
+        - if line.to_s.=~ /VS.+ATTY:/
+          - @wrong_sort = index.to_i
+          br
+        - if @wrong_sort != 0 && @wrong_sort + 1 == index
+          = line[/(.*?)ATTY:/m, 1]
+
+      br
+
       - if index1 == 0
         - title = lines[0].gsub(/\s+/m, " ").strip
         - court_date_array = lines[1].gsub(/\s+/m, '  ').strip.split("  ")
@@ -68,12 +79,12 @@
       - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
       - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
       = defendant_tmp = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
-      br
-      = dot_block[/ATTY:(.*?)VS./m, 1].to_s
-      br
-      = dot_block[/ATTY:(.*?)ATTY:/m, 1].to_s
-      br
-      = dot_block[/ATTY:(.*?)/i, 1].to_s
+      /br
+      /= dot_block[/ATTY:(.*?)VS./m, 1].to_s
+      /br
+      /= dot_block[/ATTY:(.*?)ATTY:/m, 1].to_s
+      /br
+      /= dot_block[/ATTY:(.*?)/i, 1].to_s
       - atty = ''
       - if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
         - atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
