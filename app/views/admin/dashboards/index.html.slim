@@ -39,7 +39,7 @@
               .col-md-12
                 = button_tag type: 'submit', class: 'btn btn-primary pull-right' do
                   = (content_tag(:i, '', {class: 'fa fa-search'}) + ' Search').html_safe
-      ibox.float-e-margins
+      .ibox.float-e-margins
         .ibox-title.text-right
           h5
             | Search Result
@@ -47,11 +47,12 @@
           table.table.table-bordered
             thead
               tr
-                th Last Name
+                th= sort_link(@q, :atty_last_name, 'Last Name')
                 th First Name
-                th Court Date
+                th= sort_link(@q, :start_date,'Court Date', default_order: :asc)
                 th Court Time
                 th Court Location
+                th Defendant Name
             tbody
               = render @court_calendars unless @court_calendars.nil?
           .text-right
