@@ -43,4 +43,5 @@ Rails.application.routes.draw do
 
   post '/pages', to: 'pages#index'
   get '/pages', to: 'pages#index'
+  get '/pages/show', to: 'pages#show'
 end

@@ -58,7 +58,6 @@
   /            td= File.basename pdf.download_link
   - @reader.pages.each_with_index do |page, index|
     - page.text.split(/-------*/).each_with_index do|dot_block, index1|
-      = dot_block
       - lines = dot_block.scan(/^.+/)
       - lines.each_with_index do |line, index|
         - line = line.to_s.strip
@@ -78,7 +77,7 @@
       - court_time = court_time1 unless court_time1 == ''
       - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
       - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
-      = defendant_tmp = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
+      - defendant_tmp = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
       /br
       /= dot_block[/ATTY:(.*?)VS./m, 1].to_s
       /br
@@ -92,5 +91,5 @@
       - else
         - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
       br
-      - attorney = 'Attorney: ' + atty.gsub(/\s+/m, " ").strip
+      = attorney = 'Attorney: ' + atty.gsub(/\s+/m, " ").strip
       hr

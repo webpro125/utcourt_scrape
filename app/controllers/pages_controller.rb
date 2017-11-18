@@ -75,6 +75,11 @@ class PagesController < ApplicationController
     #   @reader[index] = PDF::Reader.new(Rails.root.join('public', 'pdf', File.basename(pdf.download_link) ))
     # end
   end
+
+  def show
+    # rendered_pdf = your_pdf_document.render
+    @text_analysis = PDF::Inspector::Page.analyze(Rails.root.join('public', 'pdf', 'BRIGHAM_CITY_Calendar.pdf' ))
+  end
 end
 
 
