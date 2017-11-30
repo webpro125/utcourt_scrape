@@ -11,7 +11,7 @@ class Api::UsersController < ApplicationController
       params.delete(:password)
       params.delete(:password_confirmation)
     end
-
+    puts 'first_name: ' + params[:first_name].to_s
     if @current_user.update_attributes(user_params)
       render json: @current_user
     else render json: @current_user.errors.full_messages, status: :unprocessable_entity
