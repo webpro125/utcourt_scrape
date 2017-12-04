@@ -78,7 +78,7 @@ class PagesController < ApplicationController
 
   def show
     # rendered_pdf = your_pdf_document.render
-    @text_analysis = PDF::Inspector::Page.analyze(Rails.root.join('public', 'pdf', 'BRIGHAM_CITY_Calendar.pdf' ))
+    @text_analysis = PDF::Inspector::Page.analyze(Rails.root.join('public', 'pdf', 'TOOELE_Calendar.pdf' ))
   end
 end
 

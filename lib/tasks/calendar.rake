@@ -79,6 +79,10 @@ namespace :calendar do
 
           attorney = atty.gsub(/\s+/m, " ").strip
 
+          if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
+            attorney = ''
+          end
+          
           if !attorney.nil? && attorney != ''
             atty_array = attorney.split(',')
             attorney_last_name = atty_array[0].gsub(/\s+/m, " ").strip

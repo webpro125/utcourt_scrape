@@ -35,6 +35,8 @@
       - atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
     - else
       - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
+    - if !atty.nil? and atty.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
+      - atty = ''
     = 'Atty: ' +  atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
     br
     = defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s if defendant_name.nil?
