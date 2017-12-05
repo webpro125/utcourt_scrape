@@ -47,6 +47,21 @@ namespace :calendar do
       court_time = ''
 
       @reader.pages.each_with_index do |page, index|
+        vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS./)}
+        atty_array = []
+        second_atty_array = []
+
+        vs_array.each_with_index do |vs, vindex|
+          atty_array << page[:strings][vs + 1].match(/ATTY:*.+/).to_s.gsub(/ATTY:/, '')
+          second_atty_array[vindex] = []
+          n = vs + 2
+          loop do
+            break if page[:strings][n].nil? or page[:strings][n].gsub(/\s+/m, " ").strip.to_s == '' or page[:strings][n].match(/OTN:*./)
+            second_atty_array[vindex] << page[:strings][vs + 2] unless page[:strings][vs + 2].match(/AKA */)
+            n += 1
+          end
+        end
+
         page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
           if index1 == 0
             title = page[:strings][0].gsub(/\s+/m, " ").strip
@@ -56,19 +71,19 @@ namespace :calendar do
             court_time = court_time1 unless court_time1 == ''
           end
 
-          atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
-          atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
-
-          atty = ''
-
-          if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
-            atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
-            atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
-          else
-            atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
-          end
-
-          atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
+          # atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
+          # atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
+          #
+          # atty = ''
+          #
+          # if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
+          #   atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
+          #   atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
+          # else
+          #   atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
+          # end
+          #
+          # atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
           defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s
 
           # court_date_time = DateTime.parse(court_date + ' ' + court_time)
@@ -77,12 +92,14 @@ namespace :calendar do
           #
           # atty_array.each do |attorney|
 
-          attorney = atty.gsub(/\s+/m, " ").strip
+          attorney = atty_array[index1].to_s unless atty_array[index1].nil?
 
           if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
             attorney = ''
           end
-          
+
+          court_location = CourtLocation.find_or_create_by!(name: title)
+
           if !attorney.nil? && attorney != ''
             atty_array = attorney.split(',')
             attorney_last_name = atty_array[0].gsub(/\s+/m, " ").strip
@@ -92,7 +109,6 @@ namespace :calendar do
             else
               attorney_first_name = atty_array[1].gsub(/\s+/m, " ").strip
             end
-            court_location = CourtLocation.find_or_create_by!(name: title)
 
             court_calendar = court_location.court_calendars.build(
                 start_time: court_time,
@@ -103,6 +119,34 @@ namespace :calendar do
             )
 
             court_calendar.save!
+          end
+
+          unless second_atty_array[index1].nil?
+            second_atty_array[index1].each do |ssa|
+              ssa = ssa.gsub(/\s+/m, " ").strip.to_s
+              ssa = ssa.gsub(/ATTY:/, '').gsub(/\s+/m, " ").strip.to_s unless ssa.nil?
+
+              unless ssa.nil? and ssa != ""
+                atty_array = ssa.split(',')
+                attorney_last_name = atty_array[0].gsub(/\s+/m, " ").strip
+
+                if atty_array[1].nil?
+                  attorney_first_name = ''
+                else
+                  attorney_first_name = atty_array[1].gsub(/\s+/m, " ").strip
+                end
+
+                court_calendar = court_location.court_calendars.build(
+                    start_time: court_time,
+                    start_date: Date.parse(court_date),
+                    atty_last_name: attorney_last_name.downcase,
+                    atty_first_name: attorney_first_name.downcase,
+                    defendant_name: defendant_name
+                )
+                court_calendar.save!
+              end
+            end
+
           end
         end
       end

@@ -7,6 +7,26 @@
 /  hr
 /br
 - @text_analysis.pages.each_with_index do|page, pindex|
+  p -------------------------
+  = vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS./)}
+  = vs_array.count
+  - satty_array = []
+  - ssatty_array = []
+  = page[:strings][11]
+  br
+  - vs_array.each_with_index do |vs, vindex|
+    - satty_array << page[:strings][vs + 1].match(/ATTY:*.+/).to_s.gsub(/ATTY:/, '')
+    - ssatty_array[vindex] = []
+    - n = vs + 2
+    - loop do
+      /= 'Page String: ' + page[:strings][n].to_s
+      - break if page[:strings][n].gsub(/\s+/m, " ").strip.to_s == '' or page[:strings][n].nil? or page[:strings][n].match(/OTN:*./)
+      - ssatty_array[vindex] << page[:strings][vs + 2] unless page[:strings][vs + 2].match(/AKA */)
+      - n += 1
+      br
+  br
+  = page[:strings].join(" ").split(/-------*/).count
+  p -------------------------
   - page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
     - if index1 == 0
       = 'Title: ' + title = page[:strings][0].gsub(/\s+/m, " ").strip
@@ -30,14 +50,23 @@
     /- court_time = court_time1 unless court_time1 == ''
     - atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
     - atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
+
     - if !atty_tmp.nil? && atty_tmp.split('ATTY:')[1].nil?
       - atty_tmp = dot_block.scan(/ATTY:*.+/)[1]
       - atty = atty_tmp.gsub(/ATTY:/, '') unless atty_tmp.nil?
     - else
       - atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil?
+
     - if !atty.nil? and atty.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
       - atty = ''
     = 'Atty: ' +  atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
+    br
+    = 'Test Atty: ' + satty_array[index1].to_s
+    br
+    - unless ssatty_array[index1].nil?
+      - ssatty_array[index1].each do |ssa|
+        = 'Second Atty: ' + ssa.gsub(/ATTY:/, '').to_s unless ssa.nil?
+        br
     br
     = defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s if defendant_name.nil?
     hr
