@@ -47,7 +47,7 @@ namespace :calendar do
       court_time = ''
 
       @reader.pages.each_with_index do |page, index|
-        vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS./)}
+        vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
         atty_array = []
         second_atty_array = []
 
@@ -92,7 +92,7 @@ namespace :calendar do
           #
           # atty_array.each do |attorney|
 
-          attorney = atty_array[index1].to_s unless atty_array[index1].nil?
+          attorney = atty_array[index1].to_s.gsub(/\s+/m, " ").strip unless atty_array[index1].nil?
 
           if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
             attorney = ''
@@ -101,13 +101,13 @@ namespace :calendar do
           court_location = CourtLocation.find_or_create_by!(name: title)
 
           if !attorney.nil? && attorney != ''
-            atty_array = attorney.split(',')
-            attorney_last_name = atty_array[0].gsub(/\s+/m, " ").strip
+            atty_full_name_array = attorney.split(',')
+            attorney_last_name = atty_full_name_array[0].gsub(/\s+/m, " ").strip
 
-            if atty_array[1].nil?
+            if atty_full_name_array[1].nil?
               attorney_first_name = ''
             else
-              attorney_first_name = atty_array[1].gsub(/\s+/m, " ").strip
+              attorney_first_name = atty_full_name_array[1].gsub(/\s+/m, " ").strip
             end
 
             court_calendar = court_location.court_calendars.build(
@@ -126,14 +126,14 @@ namespace :calendar do
               ssa = ssa.gsub(/\s+/m, " ").strip.to_s
               ssa = ssa.gsub(/ATTY:/, '').gsub(/\s+/m, " ").strip.to_s unless ssa.nil?
 
-              unless ssa.nil? and ssa != ""
-                atty_array = ssa.split(',')
-                attorney_last_name = atty_array[0].gsub(/\s+/m, " ").strip
+              unless ssa.nil? and ssa == ""
+                atty_full_name_array = ssa.split(',')
+                attorney_last_name = atty_full_name_array[0].gsub(/\s+/m, " ").strip
 
-                if atty_array[1].nil?
+                if atty_full_name_array[1].nil?
                   attorney_first_name = ''
                 else
-                  attorney_first_name = atty_array[1].gsub(/\s+/m, " ").strip
+                  attorney_first_name = atty_full_name_array[1].gsub(/\s+/m, " ").strip
                 end
 
                 court_calendar = court_location.court_calendars.build(

@@ -8,7 +8,7 @@
 /br
 - @text_analysis.pages.each_with_index do|page, pindex|
   p -------------------------
-  = vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS./)}
+  = vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
   = vs_array.count
   - satty_array = []
   - ssatty_array = []
@@ -62,6 +62,10 @@
     = 'Atty: ' +  atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
     br
     = 'Test Atty: ' + satty_array[index1].to_s
+    br
+    = '53:' +  page[:strings][53]
+    br
+    = '55: ' + page[:strings][55]
     br
     - unless ssatty_array[index1].nil?
       - ssatty_array[index1].each do |ssa|
