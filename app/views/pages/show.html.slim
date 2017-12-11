@@ -12,7 +12,6 @@
   = vs_array.count
   - satty_array = []
   - ssatty_array = []
-  = page[:strings][11]
   br
   - vs_array.each_with_index do |vs, vindex|
     - satty_array << page[:strings][vs + 1].match(/ATTY:*.+/).to_s.gsub(/ATTY:/, '')
@@ -26,8 +25,17 @@
       br
   br
   = page[:strings].join(" ").split(/-------*/).count
+  - vs_skip = 0
   p -------------------------
   - page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
+    - vs_match = dot_block.scan(/VS\./)[0].to_s
+    - if vs_match.nil?
+      - vs_match = ''
+    - else
+      - vs_match = vs_match.gsub(/\s+/m, " ").strip
+    - if vs_match == ''
+      - vs_skip += 1
+    br
     - if index1 == 0
       = 'Title: ' + title = page[:strings][0].gsub(/\s+/m, " ").strip
       br
@@ -61,17 +69,14 @@
       - atty = ''
     = 'Atty: ' +  atty = atty_tmp.split('ATTY:')[1].gsub(/\s+/m, " ").strip unless atty_tmp.nil? || atty_tmp == ""
     br
-    = 'Test Atty: ' + satty_array[index1].to_s
-    br
-    = '53:' +  page[:strings][53]
-    br
-    = '55: ' + page[:strings][55]
+    - if vs_match != ''
+      = 'Test Atty: ' + satty_array[index1 - vs_skip].to_s
+
     br
     - unless ssatty_array[index1].nil?
       - ssatty_array[index1].each do |ssa|
         = 'Second Atty: ' + ssa.gsub(/ATTY:/, '').to_s unless ssa.nil?
         br
-    br
     = defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s if defendant_name.nil?
     hr
     /- atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'

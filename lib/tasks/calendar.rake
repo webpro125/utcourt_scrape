@@ -50,7 +50,7 @@ namespace :calendar do
         vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
         atty_array = []
         second_atty_array = []
-
+        vs_skip = 0
         vs_array.each_with_index do |vs, vindex|
           atty_array << page[:strings][vs + 1].match(/ATTY:*.+/).to_s.gsub(/ATTY:/, '')
           second_atty_array[vindex] = []
@@ -67,10 +67,22 @@ namespace :calendar do
             title = page[:strings][0].gsub(/\s+/m, " ").strip
             court_date_array = page[:strings][2].gsub(/\s+/m, '  ').strip.split("  ")
             court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
-            court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
-            court_time = court_time1 unless court_time1 == ''
+
           end
 
+          court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
+          court_time = court_time1 unless court_time1 == ''
+
+          vs_match = dot_block.scan(/VS\./)[0].to_s
+          if vs_match.nil?
+            vs_match = ''
+          else
+            vs_match = vs_match.gsub(/\s+/m, " ").strip
+          end
+
+          if vs_match == ''
+            vs_skip += 1
+          end
           # atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
           # atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
           #
@@ -91,8 +103,9 @@ namespace :calendar do
           # atty_array = atty.split(',')
           #
           # atty_array.each do |attorney|
-
-          attorney = atty_array[index1].to_s.gsub(/\s+/m, " ").strip unless atty_array[index1].nil?
+          if vs_match != ''
+            attorney = atty_array[index1 - vs_skip].to_s.gsub(/\s+/m, " ").strip unless atty_array[index1 - vs_skip].nil?
+          else attorney = '' end
 
           if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
             attorney = ''
@@ -121,8 +134,8 @@ namespace :calendar do
             court_calendar.save!
           end
 
-          unless second_atty_array[index1].nil?
-            second_atty_array[index1].each do |ssa|
+          unless second_atty_array[index1 - vs_skip].nil?
+            second_atty_array[index1 - vs_skip].each do |ssa|
               ssa = ssa.gsub(/\s+/m, " ").strip.to_s
               ssa = ssa.gsub(/ATTY:/, '').gsub(/\s+/m, " ").strip.to_s unless ssa.nil?
 
