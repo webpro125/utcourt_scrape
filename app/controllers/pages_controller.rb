@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-
+    UserMailer.notify_today_court('sokomheng89@gmail.com').deliver_now
     if params[:name].present? && !params[:name].nil?
       file_path = Rails.root.join('public', 'pdf', params[:name])
       @reader = PDF::Reader.new(file_path ) if File.exist?(file_path)

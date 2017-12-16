@@ -1,14 +1,18 @@
 p Hello Edward Stone,
-h4 Below Courts are scheduled today.
-table.table.table-bordered
-  thead
-    tr
-      th Court Time
-      th Court Location
-      th Defendant Name
-  tbody
-    - @court_calendars.each do |cc|
+
+- if @court_calendars.count > 0
+  h4 Below Courts are scheduled today.
+  table.table.table-bordered
+    thead
       tr
-        td= cc.start_time.strftime('%H:%M:%S')
-        td= cc.court_location.name
-        td= cc.defendant_name
+        th Court Time
+        th Court Location
+        th Defendant Name
+    tbody
+      - @court_calendars.each do |cc|
+        tr
+          td= cc.start_time.strftime('%H:%M:%S')
+          td= cc.court_location.name
+          td= cc.defendant_name
+- else
+  h3 There is no scheduled courts today.
