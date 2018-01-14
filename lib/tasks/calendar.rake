@@ -45,12 +45,15 @@ namespace :calendar do
       title = ''
       court_date = ''
       court_time = ''
+      judge = ''
 
       @reader.pages.each_with_index do |page, index|
         vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
         atty_array = []
         second_atty_array = []
         vs_skip = 0
+
+        # get all vs attorneys and below attorneys(named secondary) array in one page
         vs_array.each_with_index do |vs, vindex|
           atty_array << page[:strings][vs + 1].match(/ATTY:*.+/).to_s.gsub(/ATTY:/, '')
           second_atty_array[vindex] = []
@@ -62,12 +65,17 @@ namespace :calendar do
           end
         end
 
+        # this might not be needed
         page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
           if index1 == 0
+            judge = ''
             title = page[:strings][0].gsub(/\s+/m, " ").strip
             court_date_array = page[:strings][2].gsub(/\s+/m, '  ').strip.split("  ")
             court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
-
+            court_date_array.each_with_index do |data, index|
+              break if index == court_date_array.count - 3
+              judge = judge + ' ' + data
+            end
           end
 
           court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
@@ -128,7 +136,8 @@ namespace :calendar do
                 start_date: Date.parse(court_date),
                 atty_last_name: attorney_last_name.downcase,
                 atty_first_name: attorney_first_name.downcase,
-                defendant_name: defendant_name
+                defendant_name: defendant_name,
+                judge: judge
             )
 
             court_calendar.save!
@@ -154,7 +163,8 @@ namespace :calendar do
                     start_date: Date.parse(court_date),
                     atty_last_name: attorney_last_name.downcase,
                     atty_first_name: attorney_first_name.downcase,
-                    defendant_name: defendant_name
+                    defendant_name: defendant_name,
+                    judge: judge
                 )
                 court_calendar.save!
               end

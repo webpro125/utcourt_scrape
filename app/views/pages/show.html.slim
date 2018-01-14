@@ -37,10 +37,18 @@
       - vs_skip += 1
     br
     - if index1 == 0
+      br
       = 'Title: ' + title = page[:strings][0].gsub(/\s+/m, " ").strip
       br
       - court_date_array = page[:strings][2].gsub(/\s+/m, '  ').strip.split("  ")
       = 'Court Date: ' + court_date = court_date_array[court_date_array.count - 3].to_s + ' ' + court_date_array[court_date_array.count-2].to_s + ' ' + court_date_array[court_date_array.count-1].to_s
+      br
+      - judge = ''
+      - court_date_array.each_with_index do |data, index|
+        - if index == court_date_array.count - 3
+          - break
+        - judge = judge + ' ' + data
+      = 'tmp: ' + judge
       br
       - court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
       = 'Court Time: ' + court_time = court_time1 unless court_time1 == ''

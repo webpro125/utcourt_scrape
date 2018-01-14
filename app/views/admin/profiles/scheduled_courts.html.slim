@@ -50,6 +50,7 @@
                 th= sort_link(@q, :start_time,'Court Time', default_order: :asc)
                 th Court Location
                 th Defendant Name
+                th Judge
             tbody
               = render @court_calendars unless @court_calendars.nil?
           .text-right
