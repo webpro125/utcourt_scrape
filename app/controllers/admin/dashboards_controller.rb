@@ -6,7 +6,7 @@ class Admin::DashboardsController < ApplicationController
 
     @q = CourtCalendar.ransack(params[:q])
     @q.sorts = ['start_date asc', 'start_time asc'] if @q.sorts.empty?
-    @court_calendars = @q.result.page(params[:page]).per(15)
+    @court_calendars = @q.result(distinct: true).page(params[:page]).per(15)
 
   end
 end
