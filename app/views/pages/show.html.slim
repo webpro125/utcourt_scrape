@@ -9,7 +9,13 @@
 - @text_analysis.pages.each_with_index do|page, pindex|
   p -------------------------
   = vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
-  = vs_array.count
+  p test type hearing
+  = tmp_array123 = page[:strings].each_index.select{|i| page[:strings][i].match(/-------*/)}
+  - tmp_array123.each do |i|
+    = page[:strings][i+2]
+    br
+
+  = page[:strings][6]
   - satty_array = []
   - ssatty_array = []
   br
@@ -28,6 +34,10 @@
   - vs_skip = 0
   p -------------------------
   - page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
+    - if index1 == 0
+      p= 'Tmp type of hearing: ' + page[:strings][6].to_s
+    - else
+      p= 'Tmp type of hearing: ' + page[:strings][tmp_array123[index1 - 1] + 2].to_s unless tmp_array123[index1 - 1].nil?
     - vs_match = dot_block.scan(/VS\./)[0].to_s
     - if vs_match.nil?
       - vs_match = ''
@@ -82,6 +92,7 @@
 
     br
     - unless ssatty_array[index1].nil?
+      - ssatty_array[index1] = ssatty_array[index1].uniq
       - ssatty_array[index1].each do |ssa|
         = 'Second Atty: ' + ssa.gsub(/ATTY:/, '').to_s unless ssa.nil?
         br

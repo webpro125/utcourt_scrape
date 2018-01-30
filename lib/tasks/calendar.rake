@@ -44,7 +44,7 @@ namespace :calendar do
 
       title = ''
       court_date = ''
-      court_time = ''
+
       judge = ''
 
       @reader.pages.each_with_index do |page, index|
@@ -52,6 +52,7 @@ namespace :calendar do
         atty_array = []
         second_atty_array = []
         vs_skip = 0
+        court_time = ''
 
         # get all vs attorneys and below attorneys(named secondary) array in one page
         vs_array.each_with_index do |vs, vindex|
@@ -121,7 +122,7 @@ namespace :calendar do
 
           court_location = CourtLocation.find_or_create_by!(name: title)
 
-          if !attorney.nil? && attorney != ''
+          if !attorney.nil? && attorney != '' && court_time != ''
             atty_full_name_array = attorney.split(',')
             attorney_last_name = atty_full_name_array[0].gsub(/\s+/m, " ").strip
 
@@ -143,7 +144,8 @@ namespace :calendar do
             court_calendar.save!
           end
 
-          unless second_atty_array[index1 - vs_skip].nil?
+          if !second_atty_array[index1 - vs_skip].nil?  && court_time != ''
+            second_atty_array[index1 - vs_skip] = second_atty_array[index1 - vs_skip].uniq
             second_atty_array[index1 - vs_skip].each do |ssa|
               ssa = ssa.gsub(/\s+/m, " ").strip.to_s
               ssa = ssa.gsub(/ATTY:/, '').gsub(/\s+/m, " ").strip.to_s unless ssa.nil?
