@@ -34,7 +34,7 @@ namespace :calendar do
     CourtCalendar.delete_all
     Pdf.find_each do |pdf_data|
       file_path = Rails.root.join('public', 'pdf', File.basename(pdf_data.download_link))
-
+      # file_path = Rails.root.join('public', 'pdf', 'OGDEN_Calendar.pdf')
       puts 'path: ' + file_path.to_s
       next unless File.exist?(file_path)
 
@@ -48,11 +48,15 @@ namespace :calendar do
       judge = ''
 
       @reader.pages.each_with_index do |page, index|
+        # puts 'Page Number: ' + (index + 1).to_s
         vs_array = page[:strings].each_index.select{|i| page[:strings][i].match(/VS\./)}
+        split_string_array = page[:strings].each_index.select{|i| page[:strings][i].match(/-------*/)}
         atty_array = []
         second_atty_array = []
         vs_skip = 0
         court_time = ''
+        hearing_type = ''
+        case_number = nil
 
         # get all vs attorneys and below attorneys(named secondary) array in one page
         vs_array.each_with_index do |vs, vindex|
@@ -68,6 +72,8 @@ namespace :calendar do
 
         # this might not be needed
         page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
+          dot_block1 = dot_block
+          next if dot_block1.gsub(/\s+/m, " ").match(/Page(\s)(\d+)(\s)of/)
           if index1 == 0
             judge = ''
             title = page[:strings][0].gsub(/\s+/m, " ").strip
@@ -77,7 +83,15 @@ namespace :calendar do
               break if index == court_date_array.count - 3
               judge = judge + ' ' + data
             end
+
+            hearing_type = page[:strings][6].to_s.sub(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/, '').gsub(/-|\d\s?/, "") unless page[:strings][6].nil?
+            case_number = page[:strings][7].to_s.gsub(/[^0-9 ]/i, '')
+          else
+            hearing_type = page[:strings][split_string_array[index1 - 1] + 2].to_s.sub(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/, '').gsub(/-|\d\s?/, "") unless split_string_array[index1 - 1].nil?
+            case_number = page[:strings][split_string_array[index1 - 1] + 3].to_s.gsub(/[^0-9 ]/i, '') unless split_string_array[index1 - 1].nil?
           end
+          case_number_array = case_number.split(' ')
+          case_number = case_number_array[case_number_array.length - 1]
 
           court_time1 = dot_block.scan(/^2[0-3]|[01][0-9]:?[0-5][0-9]\s[AP]M/)[0].to_s
           court_time = court_time1 unless court_time1 == ''
@@ -112,6 +126,7 @@ namespace :calendar do
           # atty_array = atty.split(',')
           #
           # atty_array.each do |attorney|
+
           if vs_match != ''
             attorney = atty_array[index1 - vs_skip].to_s.gsub(/\s+/m, " ").strip unless atty_array[index1 - vs_skip].nil?
           else attorney = '' end
@@ -119,6 +134,12 @@ namespace :calendar do
           if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
             attorney = ''
           end
+
+          # if index > 4 and index < 8
+          # puts 'Dot Block: ' + index1.to_s
+          # puts 'Case Number: ' + case_number.to_s
+          # puts 'Attorney: ' + attorney.to_s
+          # end
 
           court_location = CourtLocation.find_or_create_by!(name: title)
 
@@ -138,7 +159,9 @@ namespace :calendar do
                 atty_last_name: attorney_last_name.downcase,
                 atty_first_name: attorney_first_name.downcase,
                 defendant_name: defendant_name,
-                judge: judge
+                judge: judge,
+                hearing_type: hearing_type,
+                case_number: case_number
             )
 
             court_calendar.save!
@@ -150,7 +173,7 @@ namespace :calendar do
               ssa = ssa.gsub(/\s+/m, " ").strip.to_s
               ssa = ssa.gsub(/ATTY:/, '').gsub(/\s+/m, " ").strip.to_s unless ssa.nil?
 
-              unless ssa.nil? and ssa == ""
+              if !ssa.nil? && ssa != ""
                 atty_full_name_array = ssa.split(',')
                 attorney_last_name = atty_full_name_array[0].gsub(/\s+/m, " ").strip
 
@@ -166,7 +189,9 @@ namespace :calendar do
                     atty_last_name: attorney_last_name.downcase,
                     atty_first_name: attorney_first_name.downcase,
                     defendant_name: defendant_name,
-                    judge: judge
+                    judge: judge,
+                    hearing_type: hearing_type,
+                    case_number: case_number
                 )
                 court_calendar.save!
               end

@@ -34,7 +34,9 @@
                   = f.search_field :start_time_eq, class: 'form-control', value: (params[:q].present? ? params[:q][:start_time_eq] : '')
                   span.input-group-addon
                     span.fa.fa-clock-o
-
+              .col-md-3
+                = f.label 'Case Number'
+                = f.search_field :case_number_eq, class: 'form-control'
             .row
               .col-md-12
                 = button_tag type: 'submit', class: 'btn btn-primary pull-right' do
@@ -54,6 +56,8 @@
                 th Court Location
                 th Defendant Name
                 th Judge
+                th Case Number
+                th Type of Hearing
             tbody
               = render @court_calendars unless @court_calendars.nil?
           .text-right
