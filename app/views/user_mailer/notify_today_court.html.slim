@@ -8,11 +8,15 @@ p Hello Edward Stone,
         th Court Time
         th Court Location
         th Defendant Name
+        th Type of Hearing
+        th Case Number
     tbody
       - @court_calendars.each do |cc|
         tr
           td= cc.start_time.strftime('%H:%M:%S')
           td= cc.court_location.name
           td= cc.defendant_name
+          td= cc.hearing_type
+          td= cc.case_number
 - else
   h3 There is no scheduled courts today.
