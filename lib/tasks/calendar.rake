@@ -34,7 +34,7 @@ namespace :calendar do
     CourtCalendar.delete_all
     Pdf.find_each do |pdf_data|
       file_path = Rails.root.join('public', 'pdf', File.basename(pdf_data.download_link))
-      file_path = Rails.root.join('public', 'pdf', 'SLC_Calendar.pdf')
+      # file_path = Rails.root.join('public', 'pdf', 'SLC_Calendar.pdf')
       puts 'path: ' + file_path.to_s
       next unless File.exist?(file_path)
 
