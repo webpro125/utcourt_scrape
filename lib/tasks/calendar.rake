@@ -34,7 +34,7 @@ namespace :calendar do
     CourtCalendar.delete_all
     Pdf.find_each do |pdf_data|
       file_path = Rails.root.join('public', 'pdf', File.basename(pdf_data.download_link))
-      # file_path = Rails.root.join('public', 'pdf', 'OGDEN_Calendar.pdf')
+      file_path = Rails.root.join('public', 'pdf', 'SLC_Calendar.pdf')
       puts 'path: ' + file_path.to_s
       next unless File.exist?(file_path)
 
@@ -44,7 +44,7 @@ namespace :calendar do
 
       title = ''
       court_date = ''
-
+      court_time = ''
       judge = ''
 
       @reader.pages.each_with_index do |page, index|
@@ -54,7 +54,7 @@ namespace :calendar do
         atty_array = []
         second_atty_array = []
         vs_skip = 0
-        court_time = ''
+
         hearing_type = ''
         case_number = nil
 

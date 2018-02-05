@@ -25,10 +25,10 @@
     - n = vs + 2
     - loop do
       /= 'Page String: ' + page[:strings][n].to_s
-      - break if page[:strings][n].gsub(/\s+/m, " ").strip.to_s == '' or page[:strings][n].nil? or page[:strings][n].match(/OTN:*./)
+      - break if page[:strings][n].nil? or page[:strings][n].gsub(/\s+/m, " ").strip.to_s == '' or page[:strings][n].nil? or page[:strings][n].match(/OTN:*./)
       - ssatty_array[vindex] << page[:strings][vs + 2] unless page[:strings][vs + 2].match(/AKA */)
       - n += 1
-      br
+  = 'Page Number: ' + pindex.to_s
   br
   = page[:strings].join(" ").split(/-------*/).count
   - vs_skip = 0
@@ -101,7 +101,7 @@
         = 'Second Atty: ' + ssa.gsub(/ATTY:/, '').to_s unless ssa.nil?
         br
     = defendant_name = dot_block[/VS.(.*?)ATTY:/m, 1].to_s if defendant_name.nil?
-    hr
+    hr[style="border-top: 1px solid #333;"]
     /- atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
     /
     /- atty = ''
