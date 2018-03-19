@@ -16,7 +16,7 @@ namespace :calendar do
       end
     end
 
-    @response.search('div#origcontent div.col-xs-12.col-sm-6 div.col-xs-12.col-sm-6').each do |data|
+    @response.search('div#origcontent div.col-xs-12 div.col-xs-12.col-sm-3').each do |data|
       data.search('ul li a').each do |a_link|
         download_link = ENV['SCRAPE_DOMAIN'] + a_link['href']
         Pdf.find_or_create_by(download_link: download_link)

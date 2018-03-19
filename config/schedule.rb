@@ -27,15 +27,15 @@ if ActiveSupport::TimeZone["MST"].present?
   Time.zone = "MST"
 else Time.zone = "MDT" end
 
-# every 1.days, :at => Time.zone.parse('7:00 am').utc do
-#   rake 'calendar:download'
-#   # rake "calendar:update_calendar"
-# end
-#
-# every 1.days, :at => Time.zone.parse('23:00').utc do
-#   rake 'calendar:download'
-#   # rake "calendar:update_calendar"
-# end
+every 1.days, :at => Time.zone.parse('7:00 am').utc do
+  rake 'calendar:download'
+  # rake "calendar:update_calendar"
+end
+
+every 1.days, :at => Time.zone.parse('23:00').utc do
+  rake 'calendar:download'
+  # rake "calendar:update_calendar"
+end
 
 every 1.day, :at => Time.zone.parse('8:00 am').utc do
   rake 'calendar:notify_today_court'
