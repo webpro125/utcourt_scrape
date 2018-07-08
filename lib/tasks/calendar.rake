@@ -73,7 +73,7 @@ namespace :calendar do
         # this might not be needed
         page[:strings].join(" ").split(/-------*/).each_with_index do|dot_block, index1|
           dot_block1 = dot_block
-          next if dot_block1.gsub(/\s+/m, " ").match(/Page(\s)(\d+)(\s)of/)
+
           if index1 == 0
             judge = ''
             title = page[:strings][0].gsub(/\s+/m, " ").strip
@@ -106,6 +106,7 @@ namespace :calendar do
           if vs_match == ''
             vs_skip += 1
           end
+
           # atty_tmp = dot_block[/ATTY:(.*?)OTN:/m, 1].to_s
           # atty_tmp = dot_block[/ATTY:(.*)/m, 1] if atty_tmp == '' && dot_block.scan(/ATTY:*.+/)[1] != 'ATTY:'
           #
@@ -134,6 +135,9 @@ namespace :calendar do
           if !attorney.nil? and attorney.match(/MB - FAIL TO OBTAIN A BUSINESS LICENSE/)
             attorney = ''
           end
+
+          # Check block only includes page of string
+          next if dot_block1.gsub(/\s+/m, " ").match(/Page(\s)(\d+)(\s)of/) && case_number.to_s.gsub(/\s+/m, " ").strip == '' && attorney == ''
 
           # if index > 4 and index < 8
           # puts 'Dot Block: ' + index1.to_s
