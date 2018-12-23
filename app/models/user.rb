@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include Nameable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
   # validates :name, length: { in: 2..64 }, presence: true,
   #           format: { with: RegexConstants::Letters::AND_NUMBERS,
@@ -18,4 +18,14 @@ class User < ApplicationRecord
     self.last_name = last_name.downcase
   }
   has_many :requests
+
+
+  def active_for_authentication?
+    super && self.approved
+  end
+
+  def inactive_message
+    "Sorry, Your account is not activated. Please contact with Site Administrator"
+  end
+
 end

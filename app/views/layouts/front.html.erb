@@ -6,37 +6,18 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
-  <style>
-    body {
-      background-color: #2f3333;
-    }
-    .nav-header {
-      background-color: #2f3333;
-    }
-  </style>
 </head>
 <body class="<%= 'gray-bg' if devise_controller? %>">
 <!-- Wrapper-->
 <div id="wrapper" class="<%= params[:controller] %>.<%= params[:action] %>">
-  <% if devise_controller? %>
-      <%= yield %>
-
-
-      <!-- Include javascript per-controller - vendor plugins -->
-      <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
-
-      <!-- Include javascript per-view -->
-      <!-- For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want -->
-      <%= yield :javascript %>
-  <% else %>
   <!-- Navigation -->
-  <%= render 'layouts/navigation' %>
+  <%= render 'layouts/front/navigation' %>
 
   <!-- Page wraper -->
   <div id="page-wrapper" class="gray-bg <%= @extra_class %>">
 
     <!-- Page wrapper -->
-    <%= render 'layouts/topnavbar' %>
+    <%= render 'layouts/front/topnavbar' %>
 
     <!-- Main view  -->
     <%= yield %>
@@ -49,7 +30,6 @@
     <%= render 'layouts/footer' %>
 
   </div>
-  <% end %>
   <!-- End page wrapper-->
 
 </div>

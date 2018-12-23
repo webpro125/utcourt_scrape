@@ -1,0 +1,23 @@
+nav.navbar-default.navbar-static-side role="navigation" 
+  .sidebar-collapse
+    ul#side-menu.nav.metismenu
+      li.nav-header
+        .dropdown.profile-element
+          /span
+          /  = image_tag 'blank-avatar.png', class: 'img-circle img-responsive'
+          a.dropdown-toggle data-toggle="dropdown" href="#"
+            span.clear
+              span.block.m-t-xs.text-center
+                strong.font-bold= current_user.email
+          ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            li
+              a href=""  Profile
+            li.divider
+            li
+              = link_to 'Logout', destroy_user_session_path, method: :delete
+        .logo-element
+          | IN+
+      li class="#{is_active_controller('scheduled_courts')}"
+        = link_to scheduled_courts_path do
+          i.fa.fa-calendar
+          span.nav-label data-i18n="nav.dashboard"  My Scheduled Courts

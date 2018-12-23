@@ -11,6 +11,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile +=  [
     'pages.css',
+    'scheduled_courts.css',
+    'profiles.css',
     'admin/users.css',
     'admin/profiles.css',
     'admin/requests.css',
@@ -18,6 +20,8 @@ Rails.application.config.assets.precompile +=  [
 ]
 Rails.application.config.assets.precompile +=  [
     'pages.js',
+    'scheduled_courts.js',
+    'profiles.js',
     'admin/users.js',
     'admin/profiles.js',
     'admin/requests.js',

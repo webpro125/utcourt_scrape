@@ -9,14 +9,19 @@
             <!--</div>-->
 
         </div>
+        <!--<ul class="nav navbar-top-links navbar-left">
+            <li>
+              <%#= link_to 'Go Map View', root_path %>
+            </li>
+        </ul>-->
         <ul class="nav navbar-top-links navbar-right">
           <li>
-            <%= link_to edit_admin_profiles_path do %>
+            <%= link_to edit_profiles_path do %>
                 <i class="fa fa-user-md"></i>Profile
             <% end %>
           </li>
             <li>
-                <%= link_to destroy_admin_session_path, method: :delete do %>
+                <%= link_to destroy_user_session_path, method: :delete do %>
                     <i class="fa fa-sign-out"></i> Log out
                 <% end %>
             </li>

@@ -8,7 +8,10 @@ Rails.application.routes.draw do
                        sign_out: 'logout',
                        sign_up: 'registration'
                    },
-       controllers: { registrations: 'users/registrations', sessions: 'users/sessions' }
+       controllers: { registrations: 'users/registrations',
+                      sessions: 'users/sessions',
+                      confirmations: 'users/confirmations',
+                      passwords: 'users/passwords'}
   namespace :api do
     post 'auth_user' => 'authentication#authenticate_user'
     post 'register_user' => 'authentication#register_user'
@@ -21,14 +24,17 @@ Rails.application.routes.draw do
   end
 
   authenticated :admin do
-    root 'admin/profiles#scheduled_courts', as: :site_admin
+    # root 'admin/profiles#scheduled_courts', as: :site_admin
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'pages#index'
+  root 'scheduled_courts#index'
+
+  resources :scheduled_courts
+  resource :profiles, path: 'profile', only:[:edit, :update]
 
   namespace :admin do
-    get '/' => 'users#index'
+    get '/' => 'profiles#scheduled_courts'
     resources :users do
       get :approve
       get :disapprove
