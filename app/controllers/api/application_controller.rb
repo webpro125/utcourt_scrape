@@ -36,6 +36,10 @@ class Api::ApplicationController < ActionController::Base
     stored_location_for(resource) || signed_in_root_path(resource)
   end
 
+  def after_sign_up_path_for(resource)
+    '/login' # Or :prefix_to_your_route
+  end
+
   def authenticate_request!
     unless user_id_in_token?
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized

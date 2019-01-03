@@ -24,8 +24,10 @@ class User < ApplicationRecord
     super && self.approved
   end
 
+=begin
   def inactive_message
     "Sorry, Your account is not activated. Please contact with Site Administrator"
   end
+=end
 
 end
