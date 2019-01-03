@@ -1,5 +1,4 @@
-Module Api do
-class ApplicationController < ActionController::Base
+class Api::ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
@@ -61,5 +60,4 @@ class ApplicationController < ActionController::Base
   def user_id_in_token?
     http_token && auth_token && auth_token[:user_id].to_i
   end
-end
 end
