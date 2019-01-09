@@ -11,7 +11,7 @@ class User < ApplicationRecord
   #           format: { with: RegexConstants::Words::AND_SPECIAL,
   #                     message: 'Special letters are not allowed to input' }
   validates :first_name, :last_name, presence: true
-  validates_uniqueness_of :first_name, :last_name, :allow_blank => true
+  # validates_uniqueness_of :first_name, :last_name, :allow_blank => true
 
   before_save {
     self.first_name = first_name.downcase

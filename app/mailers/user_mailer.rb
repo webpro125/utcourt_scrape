@@ -8,6 +8,6 @@ class UserMailer < ApplicationMailer
 
   def notify_user_registered user
     @user = user
-    mail(to: 'sokomheng89@gmail.com', from: 'no-reply@firm.net', subject: 'One user is waiting for Approvement' )
+    mail(to: ['edward@stonelawfirm.net', 'sokomheng89@gmail.com'], from: 'no-reply@firm.net', subject: 'One user is waiting for Approvement' )
   end
 end
