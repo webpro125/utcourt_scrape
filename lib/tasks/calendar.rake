@@ -32,6 +32,7 @@ namespace :calendar do
 
   task update_calendar: :environment do
     CourtCalendar.delete_all
+    AttorneyUser.delete_all
     Pdf.find_each do |pdf_data|
       file_path = Rails.root.join('public', 'pdf', File.basename(pdf_data.download_link))
       # file_path = Rails.root.join('public', 'pdf', 'SLC_Calendar.pdf')
@@ -169,6 +170,9 @@ namespace :calendar do
             )
 
             court_calendar.save!
+
+            attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase, last_name: attorney_last_name.downcase)
+            attorney_user.save
           end
 
           if !second_atty_array[index1 - vs_skip].nil?  && court_time != ''
@@ -198,6 +202,9 @@ namespace :calendar do
                     case_number: case_number
                 )
                 court_calendar.save!
+
+                attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase, last_name: attorney_last_name.downcase)
+                attorney_user.save
               end
             end
 

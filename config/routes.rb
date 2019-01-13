@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
   resources :scheduled_courts
   resource :profiles, path: 'profile', only:[:edit, :update]
-
+  get 'user_autocomplete' => 'global#user_autocomplete'
   namespace :admin do
     get '/' => 'profiles#scheduled_courts'
     resources :users do

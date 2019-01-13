@@ -1,6 +1,11 @@
 = simple_form_for [:admin, @user], html: {class: ''} do |f|
-  = f.input :name, required: true
-  = f.input :phone, required: true
+  .row
+    .col-md-6
+      = f.input :first_name, required: true
+    .col-md-6
+      = f.input :last_name
+
+  = f.input :bar_number, required: true
   = f.input :email
   .row
     .col-md-6
@@ -9,5 +14,6 @@
       = f.input :password_confirmation
   .row
     .col-md-12
+      = link_to 'Cancel', admin_users_path, class: 'btn btn-default'
       = button_tag type: 'submit', class: 'btn btn-primary pull-right' do
         = (content_tag(:i, '', {class: 'fa fa-check-circle-o'}) + ' Save').html_safe

@@ -29,7 +29,7 @@ nav.navbar-default.navbar-static-side role="navigation"
         = link_to admin_users_path do
           i.fa.fa-user
           span.nav-label data-i18n="nav.dashboard"  Users
-      li class="#{is_active_controller('admin/requests')}"
-        = link_to admin_requests_path do
-          i.fa.fa-history
-          span.nav-label data-i18n="nav.dashboard"  Requests
+      /li class="#{is_active_controller('admin/requests')}"
+      /  = link_to admin_requests_path do
+      /    i.fa.fa-history
+      /    span.nav-label data-i18n="nav.dashboard"  Requests

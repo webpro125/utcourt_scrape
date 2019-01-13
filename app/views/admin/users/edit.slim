@@ -14,6 +14,11 @@
 .wrapper.wrapper-content.animated.fadeInRight
   .ibox.float-e-margins
     .ibox-title
-      h5 Add User
+      h5 Edit User
+      - unless @user.approved?
+        = link_to 'Approve', admin_user_approve_path(@user), class: 'btn btn-xs btn-info m-r-xs pull-right' unless @user.approved?
     .ibox-content
+
       = render 'form'
+
+= image_tag 'loading.gif', class: 'loading-gif', style: 'display: none'

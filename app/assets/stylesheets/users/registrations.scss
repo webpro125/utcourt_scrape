@@ -1,0 +1,25 @@
+/*
+*= require_self
+*= require plugins/jquery-ui.min
+*= require plugins/jquery-ui.theme.min
+*/
+
+.typeahead.dropdown-menu li div{
+  padding: 10px 15px;
+}
+.typeahead.dropdown-menu li:hover div{
+  color: #fff;
+  text-decoration: none;
+  background-color: #1ab394;
+  outline: 0;
+}
+
+.loading-wrap {
+  position: relative;
+}
+
+.loading-wrap .loading-gif {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
