@@ -1,5 +1,5 @@
-<h2 class="text-center">Sign up</h2>
-<h4>Please list first/name exactly how they appear on the calendar </h4>
+<h2 class="text-center font-weight-500">Registration</h2>
+<h4 class="line-height-1--5 font-weight-500">If your name does not appear in the list, please email Edward Stone at edward@stonelawfirm.net your name as it appears on court calendars and your bar number. You will be manually added as a user.</h4>
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= f.error_notification %>
     <% if resource.errors[:full_name].any? %>
@@ -15,12 +15,13 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-      <%= f.input :first_name, required: true, wrapper_html: { class: 'loading-wrap'} %>
+        <%= f.input :first_name, required: true, wrapper_html: { class: 'loading-wrap m-b-xs'} %>
       </div>
       <div class="col-md-6">
-      <%= f.input :last_name, required: true %>
+        <%= f.input :last_name, required: true, wrapper_html: { class: 'm-b-xs'} %>
       </div>
     </div>
+    <p class="m-b-md text-danger">* Start typing name and select from auto-populated list</p>
     <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
     <%= f.input :password_confirmation, required: true %>
 
