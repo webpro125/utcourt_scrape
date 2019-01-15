@@ -171,7 +171,7 @@ namespace :calendar do
 
             court_calendar.save!
 
-            attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase, last_name: attorney_last_name.downcase)
+            attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase.capitalize, last_name: attorney_last_name.downcase.capitalize)
             attorney_user.save
           end
 
@@ -203,7 +203,7 @@ namespace :calendar do
                 )
                 court_calendar.save!
 
-                attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase, last_name: attorney_last_name.downcase)
+                attorney_user = AttorneyUser.find_or_initialize_by(first_name: attorney_first_name.downcase.capitalize, last_name: attorney_last_name.downcase.capitalize)
                 attorney_user.save
               end
             end
