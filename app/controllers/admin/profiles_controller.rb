@@ -22,7 +22,7 @@ class Admin::ProfilesController < ApplicationController
   end
 
   def scheduled_courts
-    @q = CourtCalendar.where(atty_last_name: 'stone', atty_first_name: 'edward j').ransack(params[:q])
+    @q = CourtCalendar.where(atty_last_name: 'stone', atty_first_name: ['edward', 'edward j']).ransack(params[:q])
     @q.sorts = ['start_date asc', 'start_time asc'] if @q.sorts.empty?
     @court_calendars = @q.result(distinct: true).page(params[:page]).per(15)
   end

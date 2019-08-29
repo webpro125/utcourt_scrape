@@ -20,7 +20,7 @@
           = search_form_for @q, url: admin_dashboards_path do |f|
             .form-group
               .col-md-3
-                = f.label 'ATTY Name'
+                = f.label 'Last Name'
                 = f.search_field :atty_last_name_eq, class: 'form-control'
               .col-md-3
                 = f.label 'Date'
