@@ -1,30 +1,33 @@
-class Api::UsersController < ApplicationController
-  before_action :authenticate_request!
+module Api
+  class UsersController < ApplicationController
+    before_action :authenticate_request!
 
-  def user_info
-    @user = User.all
-    render json: @user
-  end
-
-  def update
-    if params[:password].blank? && params[:password_confirmation].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation)
+    def user_info
+      @user = User.all
+      render json: @user
     end
-    puts 'first_name: ' + params[:first_name].to_s
-    if @current_user.update_attributes(user_params)
-      render json: @current_user
-    else render json: @current_user.errors.full_messages, status: :unprocessable_entity
+
+    def update
+      if params[:password].blank? && params[:password_confirmation].blank?
+        params.delete(:password)
+        params.delete(:password_confirmation)
+      end
+      puts 'first_name: ' + params[:first_name].to_s
+      if @current_user.update_attributes(user_params)
+        render json: @current_user
+      else
+        render json: @current_user.errors.full_messages, status: :unprocessable_entity
+      end
     end
-  end
 
-  def court_locations
-    render json: CourtLocation.all
-  end
+    def court_locations
+      render json: CourtLocation.all
+    end
 
-  private
+    private
 
-  def user_params
-    params.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone)
+    def user_params
+      params.permit(:email, :password, :password_confirmation, :first_name, :last_name, :phone)
+    end
   end
 end
