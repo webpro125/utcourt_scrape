@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'slim', '~> 3.0', '>= 3.0.7'
 gem 'devise', '~> 4.2'
-gem 'simple_form', '~> 3.4'
+gem 'simple_form', '~> 5.0'
 gem 'paperclip', '~> 5.1'
 gem 'pundit', '~> 1.1'
 gem 'virtus', '~> 1.0.5'
