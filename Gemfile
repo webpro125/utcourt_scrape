@@ -62,7 +62,7 @@ gem 'jwt', '~> 1.5.6'
 gem 'omniauth'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'twilio-ruby', '~> 4.11.1'
-gem 'kaminari', '~> 1.0.1'
+gem 'kaminari', '~> 1.2.1'
 gem 'pdf-inspector'
 
 group :development, :test do
